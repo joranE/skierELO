@@ -2,18 +2,19 @@
 #' 
 #' Calculates entire history of ELO ratings for sprint races.
 #' 
-#' @param race_list list of data.frames with race results
+#' @param races list of data.frame's with race results, in chronological order
 #' @param current_rating data.frame with pre-initialized starting rating
 #' @param K K factor
 #' @param P inflation factor for provisional ratings
 #' @param provisional_n number of races a skier is considered provisional
 #' @param season_shrink amount to shrink ratings between seasons
+#' @param default_rating
 #' @export
-calc_elo_spr <- function(race_list,current_rating,K,P,provisional_n,season_shrink){
-  all_ratings <- vector("list",length(race_list))
+calc_elo_spr <- function(races,current_rating,K,P,provisional_n,season_shrink,default_rating = 1300){
+  all_ratings <- vector("list",length(races))
   prev_season <- '1991-1992'
-  for (i in seq_along(race_list)){
-    cur_race <- race_list[[i]]
+  for (i in seq_along(races)){
+    cur_race <- races[[i]]
     cur_season <- cur_race$season[1]
     if (cur_season != prev_season){
       current_rating$cur_rating <- with(current_rating,
