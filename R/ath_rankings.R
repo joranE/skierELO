@@ -1,9 +1,9 @@
 #' Generate Rankings
 #' 
 #' @param .ratings Raw ratings for all skiers
-#' @param .season
-#' @param .date
-#' @param .prov
+#' @param .season season
+#' @param .date date
+#' @param .prov provisional number of races
 #' @export
 #' @import dplyr
 ath_ranking <- function(.ratings,.season = max(.ratings$season),
@@ -18,8 +18,6 @@ ath_ranking <- function(.ratings,.season = max(.ratings$season),
     mutate(ranking = min_rank(-new_rating)) %>%
     arrange(gender,ranking) %>%
     select(fisid,name,nation,new_rating,ranking) %>%
-    rename("Gender" = gender,"FIS ID" = fisid,"Name" = name,
-           "Nation" = nation,"Rating" = new_rating,"Rank" = ranking) %>%
     as.data.frame()
-  setNames(split(rnk,rnk$Gender),c('Men','Women'))
+  setNames(split(rnk,rnk$gender),c('Men','Women'))
 }

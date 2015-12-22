@@ -8,7 +8,7 @@
 #' @param P inflation factor for provisional ratings
 #' @param provisional_n number of races a skier is considered provisional
 #' @param season_shrink amount to shrink ratings between seasons
-#' @param default_rating
+#' @param default_rating default rating
 #' @export
 calc_elo_dst <- function(races,current_rating,
                           K = c('Interval' = 32,'Mass' = 25,'Pursuit' = 25,'Handicap' = 20,'Pursuit Break' = 25),

@@ -8,9 +8,10 @@
 #' @param P inflation factor for provisional ratings
 #' @param provisional_n number of races a skier is considered provisional
 #' @param season_shrink amount to shrink ratings between seasons
-#' @param default_rating
+#' @param default_rating default rating
 #' @export
-calc_elo_spr <- function(races,current_rating,K = 32,P = 1.25,provisional_n = 6L,season_shrink = 2/3,default_rating = 1300){
+calc_elo_spr <- function(races,current_rating,K = 32,P = 1.25,
+                         provisional_n = 6L,season_shrink = 2/3,default_rating = 1300){
   all_ratings <- vector("list",length(races))
   prev_season <- '1991-1992'
   for (i in seq_along(races)){
