@@ -10,14 +10,15 @@
 #' @param season_shrink amount to shrink ratings between seasons
 #' @param default_rating
 #' @export
-calc_elo_dst <- function(races,current_rating,K,P,provisional_n,season_shrink,default_rating = 1300){
+calc_elo_dst <- function(races,current_rating,
+                          K = c('Interval' = 32,'Mass' = 25,'Pursuit' = 25,'Handicap' = 20,'Pursuit Break' = 25),
+                          P = 1.25,provisional_n = 6L,season_shrink = 2/3,default_rating = 1300){
   all_ratings <- vector("list",length(races))
   prev_season <- '1991-1992'
   for (i in seq_along(races)){
     cur_race <- races[[i]]
     cur_season <- cur_race$season[1]
     if (cur_season != prev_season){
-      #cat("\nShrinking ratings after season",prev_season)
       current_rating$cur_rating <- with(current_rating,
                                         default_rating + ((season_shrink) * (cur_rating - default_rating)))
       prev_season <- cur_season
@@ -60,7 +61,7 @@ calc_elo_dst <- function(races,current_rating,K,P,provisional_n,season_shrink,de
     current_rating$race_count[ind] <- current_rating$race_count[ind] + 1
     
   }
-  all_ratings <- rbind_all(all_ratings)
+  all_ratings <- dplyr::rbind_all(all_ratings)
   all_ratings
 }
 
