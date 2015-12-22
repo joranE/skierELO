@@ -8,8 +8,8 @@
 #' @import dplyr
 ath_ranking <- function(.ratings,.season = max(.ratings$season),
                         .date = as.character(Sys.Date()),.prov = 6){
-  if (.season > max(ratings$season)) .season <- max(ratings$season)
-  rnk <- ratings %>%
+  if (.season > max(.ratings$season)) .season <- max(.ratings$season)
+  rnk <- .ratings %>%
     filter(season == .season & date <= .date) %>%
     group_by(gender,fisid,name) %>%
     mutate(season_races = n()) %>%
