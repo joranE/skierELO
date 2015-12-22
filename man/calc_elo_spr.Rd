@@ -19,6 +19,8 @@ calc_elo_spr(races, current_rating, K = 32, P = 1.25, provisional_n = 6L,
 \item{provisional_n}{number of races a skier is considered provisional}
 
 \item{season_shrink}{amount to shrink ratings between seasons}
+
+\item{default_rating}{default rating}
 }
 \description{
 Calculates entire history of ELO ratings for sprint races.

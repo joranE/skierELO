@@ -9,6 +9,12 @@ ath_ranking(.ratings, .season = max(.ratings$season),
 }
 \arguments{
 \item{.ratings}{Raw ratings for all skiers}
+
+\item{.season}{season}
+
+\item{.date}{date}
+
+\item{.prov}{provisional number of races}
 }
 \description{
 Generate Rankings

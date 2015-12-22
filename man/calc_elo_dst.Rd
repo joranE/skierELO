@@ -20,6 +20,8 @@ calc_elo_dst(races, current_rating, K = c(Interval = 32, Mass = 25, Pursuit =
 \item{provisional_n}{number of races a skier is considered provisional}
 
 \item{season_shrink}{amount to shrink ratings between seasons}
+
+\item{default_rating}{default rating}
 }
 \description{
 Calculates entire history of ELO ratings for distance races.
