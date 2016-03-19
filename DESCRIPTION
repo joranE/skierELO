@@ -9,6 +9,7 @@ Description: ELO rating functions for XC skiers.
 License: GPL (>= 2)
 Imports:
     Rcpp (>= 0.11.5),
-    dplyr
+    dplyr,
+    fastmatch
 LinkingTo: Rcpp
 RoxygenNote: 5.0.1

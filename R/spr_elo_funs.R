@@ -14,21 +14,22 @@ calc_elo_spr <- function(races,current_rating,K = 32,P = 1.25,
                          provisional_n = 6L,season_shrink = 2/3,default_rating = 1300){
   all_ratings <- vector("list",length(races))
   prev_season <- '1991-1992'
+  current_rating_matrix <- as.matrix(current_rating[,c('race_count','cur_rating')])
+  
   for (i in seq_along(races)){
     cur_race <- races[[i]]
     cur_season <- cur_race$season[1]
     if (cur_season != prev_season){
-      current_rating$cur_rating <- with(current_rating,
-                                        default_rating + ((season_shrink) * (cur_rating - default_rating)))
+      current_rating_matrix[,2L] <- default_rating + ((season_shrink) * (current_rating_matrix[,2] - default_rating))
       prev_season <- cur_season
     }
     
     race_cat <- cur_race$cat1[1]
     
     cur_names <- cur_race[,c('gender','season','date','raceid','fisid','name','nation')]
-    ind <- match(cur_names$fisid,current_rating$fisid)
-    cur_names$race_count <- current_rating$race_count[ind]
-    cur_names$cur_rating <- current_rating$cur_rating[ind]
+    ind <- fastmatch::fmatch(cur_names$fisid,current_rating$fisid)
+    cur_names$race_count <- current_rating_matrix[ind,1L]
+    cur_names$cur_rating <- current_rating_matrix[ind,2L]
     
     K1 <- K
     if (!(race_cat %in% c('WC','WSC','TDS','OWG','WJC','U23'))){
@@ -45,10 +46,10 @@ calc_elo_spr <- function(races,current_rating,K = 32,P = 1.25,
     all_ratings[[i]] <- cur_names
     
     #Update current rankings
-    current_rating$cur_rating[ind] <- cur_names$new_rating
-    current_rating$race_count[ind] <- current_rating$race_count[ind] + 1
+    current_rating_matrix[ind,2L] <- cur_names$new_rating
+    current_rating_matrix[ind,1L] <- current_rating_matrix[ind,1L] + 1
     
   }
-  all_ratings <- dplyr::rbind_all(all_ratings)
+  all_ratings <- dplyr::bind_rows(all_ratings)
   all_ratings
 }
